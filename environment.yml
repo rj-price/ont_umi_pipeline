@@ -1,20 +1,20 @@
-name: pipeline-umi-amplicon
+name: pipeline-umi-amplicon-test
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
   - python==3.8.16
-  - snakemake
-  - minimap2
-  - samtools
-  - tabix
+  - snakemake==7.32.4
+  - minimap2==2.26-r1175
+  - samtools==1.19.2
+  - tabix==1.19.1
   - seqkit
-  - pysam
-  - bedtools
-  - vsearch
-  - varscan
-  - medaka
+  - pysam==0.22.0
+  - bedtools==2.31.1
+  - vsearch==2.27.0
+  - varscan==2.4.6
+  - medaka==1.6.1
   - pip
   - pip:
-    - catfishq
+    - catfishq==1.4.0

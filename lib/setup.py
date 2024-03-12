@@ -15,13 +15,16 @@ setup(
     description='Toolset to work with ONT amplicon sequencing using UMIs',
     zip_safe=False,
     install_requires=[
-        'tqdm',
-        'pysam',
-        'numpy',
-        'pandas',
-        'seaborn',
+        'seaborn==0.11.2',
+        'tqdm==4.66.2',
+        'pysam==0.22.0',
+        'pandas==1.4.4',
         'edlib',
-        'biopython'
+        'biopython==1.83',
+        'tensorflow==2.7.0',
+        'scipy==1.9.1',
+        'numpy==1.19.5',
+        'matplotlib==3.6'
     ],
     packages=['umi_amplicon_tools'],
     package_data={
