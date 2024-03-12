@@ -16,7 +16,7 @@ The pipeline performs the following steps:
 - Separate into amplicons
 - Extract UMI sequences for all reads
 - Cluster UMI sequences per amplicon using vsearch and compute high accuracy consensus reads
-- Align high accuracy conesnsus reads and perform simple variant calling (optional)
+- Align high accuracy consensus reads and perform simple variant calling (optional)
 
 ******************
 # Getting Started
@@ -64,7 +64,7 @@ chr1    107167322       107168239       target_a_chr1_107167756_T_C
 
 ### Output
 
- The main output files created by the pipeline are:
+The main output files created by the pipeline are:
 
 | Output | Description |
 |--------|-------------|
