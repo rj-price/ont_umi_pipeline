@@ -30,7 +30,7 @@ The following software packages must be installed prior to running:
 After installing miniconda3, install the pipeline as follows:
 ```bash
 # Get pipeline
-git clone https://github.com/nanoporetech/pipeline-umi-amplicon.git 
+git clone https://github.com/rj-price/pipeline-umi-amplicon.git 
 # Change to directory
 cd pipeline-umi-amplicon
 # Create conda environment with all dependencies
@@ -143,13 +143,10 @@ unstable and subject to rapid iteration by Oxford Nanopore Technologies.
 
 
 ### TODO
-
+- Remove catfishq and replace with seqtk in ```rule map_1d``` to subsample using fractions rather than absolute numbers
+- Add stats output and plots, number of umis, umi distribution, snps plot umi vs raw, read alignment stats
+- Add primer trimming after consensus generation, before variant calling
 - Number of reads collapsed in the header of the bam file
 - Check that balance reads is working as its meant to
 - Add handling of errors if no reads aligned to a reference
-- Add stats output and plots, number of umis, umi distribution, snps plot umi vs raw, read alignment stats
-
-Done
-- I added a fastq filter options (min read length and average quality) using filtlong
-- The user can also now pass options to the variant calling using the config file
-- It runs as before when in defaults mode
+- Create Docker image
