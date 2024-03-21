@@ -6,9 +6,9 @@ channels:
 dependencies:
   - python==3.8.16
   - snakemake==7.32.4
-  - minimap2==2.26-r1175
+  - minimap2==2.26
   - samtools==1.19.2
-  - tabix==1.19.1
+  - tabix==1.11
   - seqkit
   - pysam==0.22.0
   - bedtools==2.31.1
