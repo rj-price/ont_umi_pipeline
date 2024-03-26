@@ -1,0 +1,10 @@
+seaborn==0.11.2
+tqdm==4.66.2
+pysam==0.22.0
+pandas==1.4.4
+edlib
+biopython==1.83
+tensorflow==2.7.0
+scipy==1.9.1
+numpy==1.19.5
+matplotlib==3.6

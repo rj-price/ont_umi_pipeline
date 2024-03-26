@@ -69,7 +69,7 @@ def count_fastx_reads(filename):
 
 
 def get_median_acc(folder, amplicon_name):
-    acc_stats_file = "{}/09_stats/04_{}_final_size_vs_acc.tsv".format(
+    acc_stats_file = "{}/09_stats/04_{}_final_cluster_stats.tsv".format(
         folder, amplicon_name
     )
     acc_stats = pd.read_csv(acc_stats_file, sep="\t")

@@ -73,7 +73,7 @@ The main output files created by the pipeline are:
 | Aligned reads | Aligned reads in indexed and sorted BAM format |
 | Variant calls | Called variants in VCF format |
 
-After the a pipeline analysis has completed, the aligned reads can be found at `{output_folder}/{run_name}/07_align_consensus/{amplicon_name}_final.bam` e.g. `example_egfr_single_read_run/07_align_consensus/EGFR_917_final.bam`.
+After the a pipeline analysis has completed, the aligned reads can be found at `{run_name}/07_align_consensus/{amplicon_name}_final.bam` e.g. `example_egfr_single_read_run/07_align_consensus/EGFR_917_final.bam`, and the variant call file can be found at `{run_name}/08_variants/{target}_final.vcf` e.g. `example_egfr_single_read_run/08_variants/EGFR_917_final.vcf`.
 
 ### Usage:
 
@@ -142,6 +142,8 @@ unstable and subject to rapid iteration by Oxford Nanopore Technologies.
 ******************
 ### TODO
 - Merge pipelines, remove old env, update test env name
+- Incorporate bam_to_phred.py in pipeline
+- Add max_read_len to config.yml and Snakefile, add updated config values to Snakefile
 - Number of reads collapsed in the header of the bam file 
 - Remove split by amplicon step? (only one primer set in params, so useless?)
 - Add optional barcoding step
@@ -153,3 +155,4 @@ unstable and subject to rapid iteration by Oxford Nanopore Technologies.
 - Add stats output and plots, number of umis, umi distribution, read alignment stats
 - Skip second UMI extraction step
 - Add BED file to variant calling to specify amplicon region
+- Tidy up and order Snakefile
