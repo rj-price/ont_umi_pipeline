@@ -286,6 +286,15 @@ def extract_umis(
             )
         if tsv:
             print(
+                "OutputFile",
+                "MaxPatternDist",
+                "StrandStats_Pos",
+                "StrandStats_Neg",
+                "FwdRevRatio",
+                "Perc",
+                file=tsv
+            )
+            print(
                 output_file,
                 max_pattern_dist,
                 strand_stats["+"],
