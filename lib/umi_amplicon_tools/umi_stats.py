@@ -34,8 +34,8 @@ def parse_args(argv):
     return args
 
 
-def get_readstast_bam(folder):
-    bam_1d_file = "{}/align/1d.bam".format(folder)
+def get_readstats_bam(folder):
+    bam_1d_file = "{}/01_align/1_d.bam".format(folder)
 
     mapped = 0
     unmapped = 0
@@ -51,14 +51,12 @@ def get_readstast_bam(folder):
 
 
 def count_fastx_reads_with_umi(folder, amplicon_name):
-    fastq_with_umi_file = "{}/fasta_umi/{}_detected_umis.fasta".format(
-        folder, amplicon_name
-    )
+    fastq_with_umi_file = "{}/03_umi_fasta/{}_detected_umis.fasta".format(folder, amplicon_name)
     return count_fastx_reads(fastq_with_umi_file)
 
 
 def count_fastx_reads_on_target(folder, amplicon_name):
-    fastq_ontarget_file = "{}/fasta_filtered/{}.fastq".format(folder, amplicon_name)
+    fastq_ontarget_file = "{}/02_amplicon_fastq/{}.fastq".format(folder, amplicon_name)
     return count_fastx_reads(fastq_ontarget_file)
 
 
@@ -71,7 +69,7 @@ def count_fastx_reads(filename):
 
 
 def get_median_acc(folder, amplicon_name):
-    acc_stats_file = "{}/stats/{}_consensus_size_vs_acc.tsv".format(
+    acc_stats_file = "{}/09_stats/04_{}_final_size_vs_acc.tsv".format(
         folder, amplicon_name
     )
     acc_stats = pd.read_csv(acc_stats_file, sep="\t")
@@ -80,7 +78,7 @@ def get_median_acc(folder, amplicon_name):
 
 
 def get_reads_usage_stats(folder, amplicon_name, min_size=20, max_size=60):
-    cluster_stats_file = "{}/stats/{}_vsearch_cluster_stats.tsv".format(
+    cluster_stats_file = "{}/09_stats/03_{}_vsearch_cluster_stats.tsv".format(
         folder, amplicon_name
     )
     cluster_stats = pd.read_csv(cluster_stats_file, sep="\t")
@@ -128,10 +126,11 @@ def get_stats(
     min_cluster_size,
     max_cluster_size,
     figure_prefix,
+    figures
 ):
     if figure_prefix:
-        cluster_read_hist(folder, amplicon_name, display_name, figure_prefix)
-    sequenced, mapped, unmapped = get_readstast_bam(folder)
+        cluster_read_hist(folder, amplicon_name, display_name, figure_prefix, figures, min_cluster_size)
+    sequenced, mapped, unmapped = get_readstats_bam(folder)
     on_target = count_fastx_reads_on_target(folder, amplicon_name)
     with_umi = count_fastx_reads_with_umi(folder, amplicon_name)
     median_acc = get_median_acc(folder, amplicon_name)
@@ -169,8 +168,8 @@ def get_stats(
     }
 
 
-def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix):
-    filename = "{}/stats/{}_vsearch_cluster_stats.tsv".format(folder, amplicon_name)
+def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix, figures, min_cluster_size):
+    filename = "{}/09_stats/03_{}_vsearch_cluster_stats.tsv".format(folder, amplicon_name)
     cluster_stats = pd.read_csv(filename, sep="\t")
 
     current_palette = sns.color_palette()
@@ -179,7 +178,7 @@ def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix):
     sns.set_style(
         "whitegrid",
         {
-            "grid.linestyle": "--",
+            "grid.linestyle": "--", "xtick.bottom": True
         },
     )
     sns.set_context("paper", font_scale=3)
@@ -195,20 +194,19 @@ def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix):
         title="Cluster size distribution - Sample: {}".format(display_name),
     )
 
-    ax.axvline(20, ls="--", zorder=1, label="Min cluster size", color="red", alpha=0.8)
-    ax.axvline(60, ls="--", zorder=1, label="Max cluster size", color="red", alpha=0.8)
+    ax.axvline(int(min_cluster_size), ls="--", zorder=1, label="Min cluster size", color="red", alpha=0.8)
+    
     ax.set_xlim(0, 200)
-
     xmin, xmax = ax.get_xlim()
-    custom_ticks = np.linspace(xmin, xmax, 5, dtype=int)
+    custom_ticks = np.arange(int(xmin), int(xmax)+1, 50)
     ax.set_xticks(custom_ticks)
     ax.set_xticklabels(custom_ticks)
 
     sns.despine()
     plt.tight_layout()
-    fig.savefig(str(figure_prefix) + "_cluster_size_distribution.pdf", dpi=300)
-    fig.savefig(str(figure_prefix) + "_cluster_size_distribution.png", dpi=100)
-    plt.show()
+    plot_path = f"{figures}/cluster_size_distribution"
+    fig.savefig(str(plot_path) + ".pdf", dpi=300)
+    fig.savefig(str(plot_path) + ".png", dpi=100)
 
 
 def main(argv=sys.argv[1:]):
@@ -237,6 +235,8 @@ def main(argv=sys.argv[1:]):
             "excess_reads_perc",
         ]
     )
+    
+    dfs = []
     i = 0
     for folder in folders:
         if ":" in folder:
@@ -249,11 +249,15 @@ def main(argv=sys.argv[1:]):
         figures_ext = None
         if figures:
             figures_ext = "{}_{}_{}".format(figures, name, i)
-        stats = get_stats(folder, name, display_name, c_min, c_max, figures_ext)
-        df_stats = df_stats.append(stats, ignore_index=True)
-
+        
+        stats = get_stats(folder, name, display_name, c_min, c_max, figures_ext, figures)
+        dfs.append(pd.DataFrame(stats, index=[i]))
+        
         i += 1
-    print(df_stats.to_csv(sep="\t", index=False, header=True), end="")
+
+    df_stats = pd.concat(dfs, ignore_index=True)
+    save_path = f"{figures}/final_stats.csv"
+    df_stats.to_csv(save_path, sep="\t", index=False)
 
 
 if __name__ == "__main__":
