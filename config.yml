@@ -31,7 +31,7 @@ min_overlap: 0.90
 balance_strands: True
 
 # Medaka model used to compute consensus reads
-medaka_model: "r941_min_high_g360"
+medaka_model: "r1041_e82_400bps_sup_g615"
 
 # Forward tail of primer (Ftail...UMI...primer)
 fwd_context: "GTATCGTGTAGAGACTGCGTAGG"
@@ -61,6 +61,6 @@ min_read_len: 100
 min_mean_qual: 70
 
 # Variant filtering options for varscan
-varscan_params: '--variants 1 --output-vcf 1 --min-coverage 8 --min-avg-qual 0 --min-var-freq 0.01 --strand-filter 0 --p-value 1 --min-reads2 2'
+varscan_params: '--variants 1 --output-vcf 1 --min-coverage 8 --min-avg-qual 0 --min-var-freq 0.001 --strand-filter 0 --p-value 1 --min-reads2 2'
 
 
