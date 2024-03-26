@@ -129,7 +129,7 @@ def filter_reads(args):
     n_ontarget = 0
     n_total, n_unmapped = count_reads(bam_file)
 
-    logging.info("Reads found: {}".format(n_total))
+    logging.info("Total reads: {}".format(n_total))
     unmapped_perc = 0
     if n_total:
         unmapped_perc = int(100.0 * n_unmapped / n_total)
@@ -176,7 +176,7 @@ def filter_reads(args):
                     else:
                         print(read.query_sequence, file=out)
 
-            logging.info("Reads found: {}".format(n_reads_region))
+            logging.info("Reads analysed: {}".format(n_reads_region))
 
     ontarget_perc = 0
     if n_total:
@@ -187,9 +187,9 @@ def filter_reads(args):
         concatermer_perc = int(100.0 * n_concatamer / n_ontarget)
     if n_ontarget:
         short_perc = int(100.0 * n_short / n_ontarget)
-    logging.info("On target: {} ({}%)".format(n_ontarget, ontarget_perc))
-    logging.info("{} concatamers - {}%".format(n_concatamer, concatermer_perc))
-    logging.info("{} short - {}%".format(n_short, short_perc))
+    logging.info("Reads mapped: {} ({}%)".format(n_ontarget, ontarget_perc))
+    logging.info("Concatamers: {} ({}%)".format(n_concatamer, concatermer_perc))
+    logging.info("Short: {} ({}%)".format(n_short, short_perc))
 
 
 def main(argv=sys.argv[1:]):
