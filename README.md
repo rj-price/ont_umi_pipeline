@@ -1,4 +1,4 @@
-# pipeline-umi-amplicon
+# ONT UMI Pipeline
 
 ### Overview
 
@@ -141,8 +141,7 @@ unstable and subject to rapid iteration by Oxford Nanopore Technologies.
 
 ******************
 ### TODO
-- Merge pipelines, remove old env, update test env name
-- Incorporate bam_to_phred.py in pipeline
+- Incorporate bam_to_phred.py in pipeline (eg. python bam_to_phred.py LRG1_final.bam targets.bed)
 - Add max_read_len to config.yml and Snakefile, add updated config values to Snakefile
 - Number of reads collapsed in the header of the bam file 
 - Remove split by amplicon step? (only one primer set in params, so useless?)
