@@ -1,4 +1,4 @@
-name: pipeline-umi-amplicon-test
+name: ont_umi_pipeline
 channels:
   - conda-forge
   - bioconda
@@ -16,5 +16,3 @@ dependencies:
   - varscan==2.4.6
   - medaka==1.6.1
   - pip
-  - pip:
-    - catfishq==1.4.0

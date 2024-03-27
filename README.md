@@ -2,7 +2,7 @@
 
 ### Overview
 
-`pipeline-umi-amplicon` is a pipeline for generating high accuracy single
+`ont_umi_pipeline` is a pipeline for generating high accuracy single
 molecule reads using unique molecular identifiers (UMIs) from amplicon data.
 The pipeline accepts FASTQ-format sequence files as input and outputs both
 aligned reads, variant calls and QC stats.
@@ -32,14 +32,14 @@ The following software packages must be installed prior to running:
 After installing miniconda3, install the pipeline as follows:
 ```bash
 # Get pipeline
-git clone https://github.com/rj-price/pipeline-umi-amplicon.git 
+git clone https://github.com/rj-price/ont_umi_pipeline.git 
 # Change to directory
-cd pipeline-umi-amplicon
+cd ont_umi_pipeline
 # Create conda environment with all dependencies
 conda env create -f environment.yml
 # Activate environment
-conda activate pipeline-umi-amplicon
-# Install python packages provided by pipeline-umi-amplicon
+conda activate ont_umi_pipeline
+# Install python packages provided by ont_umi_pipeline
 cd lib && pip install . && cd ..
 
 # To test if the installation was successful run
