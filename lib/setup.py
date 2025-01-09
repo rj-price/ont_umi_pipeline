@@ -16,7 +16,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'seaborn',
-        'matplotlib'
+        'matplotlib',
+        'biopython'
     ],
     packages=['umi_amplicon_tools'],
     package_data={
