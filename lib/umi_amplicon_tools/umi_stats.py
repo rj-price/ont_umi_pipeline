@@ -169,7 +169,7 @@ def get_stats(
 
 
 def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix, figures, min_cluster_size):
-    filename = "{}/09_stats/03_{}_vsearch_cluster_stats.tsv".format(folder, amplicon_name)
+    filename = f"{folder}/09_stats/03_{amplicon_name}_vsearch_cluster_stats.tsv"
     cluster_stats = pd.read_csv(filename, sep="\t")
 
     current_palette = sns.color_palette()
@@ -183,30 +183,32 @@ def cluster_read_hist(folder, amplicon_name, display_name, figure_prefix, figure
     )
     sns.set_context("paper", font_scale=3)
 
+    # Fix the calculation of "Read_count"
     tmp = cluster_stats["n"].value_counts().reset_index()
-    tmp["Read_count"] = tmp["n"] * tmp["index"]
+    tmp.columns = ["Cluster_size", "Frequency"]  # Rename columns for clarity
+    tmp["Read_count"] = tmp["Cluster_size"] * tmp["Frequency"]
 
-    ax = sns.barplot(x="index", color=current_palette[0], y="Read_count", data=tmp)
+    ax = sns.barplot(x="Cluster_size", color=current_palette[0], y="Read_count", data=tmp)
     ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
     ax.set(
         xlabel="Cluster size",
         ylabel="Number of reads in clusters",
-        title="Cluster size distribution - Sample: {}".format(display_name),
+        title=f"Cluster size distribution - Sample: {display_name}",
     )
 
     ax.axvline(int(min_cluster_size), ls="--", zorder=1, label="Min cluster size", color="red", alpha=0.8)
-    
+
     ax.set_xlim(0, 200)
     xmin, xmax = ax.get_xlim()
-    custom_ticks = np.arange(int(xmin), int(xmax)+1, 50)
+    custom_ticks = np.arange(int(xmin), int(xmax) + 1, 50)
     ax.set_xticks(custom_ticks)
     ax.set_xticklabels(custom_ticks)
 
     sns.despine()
     plt.tight_layout()
     plot_path = f"{figures}/cluster_size_distribution"
-    fig.savefig(str(plot_path) + ".pdf", dpi=300)
-    fig.savefig(str(plot_path) + ".png", dpi=100)
+    fig.savefig(f"{plot_path}.pdf", dpi=300)
+    fig.savefig(f"{plot_path}.png", dpi=100)
 
 
 def main(argv=sys.argv[1:]):
