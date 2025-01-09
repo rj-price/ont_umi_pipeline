@@ -2,17 +2,16 @@ name: ont_umi_pipeline
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
-  - python==3.8.16
-  - snakemake==7.32.4
-  - minimap2==2.26
-  - samtools==1.19.2
-  - tabix==1.11
+  - python
+  - snakemake
+  - minimap2
+  - samtools
+  - tabix
   - seqkit
-  - pysam==0.22.0
-  - bedtools==2.31.1
-  - vsearch==2.27.0
-  - varscan==2.4.6
-  - medaka==1.6.1
+  - pysam
+  - bedtools
+  - vsearch
+  - varscan
+  - medaka
   - pip
